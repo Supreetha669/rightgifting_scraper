@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RightGifting Product Scraper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #output {
+            background: black;
+            color: #00ff00;
+            padding: 15px;
+            margin-top: 15px;
+            height: 350px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+
+<h2>RightGifting Product Scraper</h2>
+
+<form id="scrapeForm">
+    <input
+        type="text"
+        id="url"
+        name="url"
+        placeholder="Paste RightGifting product URL"
+        style="width: 75%;"
+        required
+    >
+    <button type="submit">Run Scraper</button>
+</form>
+
+<div id="output">Waiting...</div>
+
+<script>
+document.getElementById("scrapeForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const output = document.getElementById("output");
+    output.textContent = "Starting scraper...\n\n";
+
+    const formData = new FormData(this);
+
+    fetch("/run", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.text())
+    .then(text => {
+        output.textContent += text;
+    })
+    .catch(err => {
+        output.textContent += "ERROR: " + err;
+    });
+});
+</script>
+
+</body>
+</html>
