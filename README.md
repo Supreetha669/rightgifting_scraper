@@ -1,0 +1,1 @@
+# rightgifting_scraper
