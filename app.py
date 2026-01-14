@@ -1,16 +1,18 @@
+
+if __name__ == "__main__":
+    # Test with your URL
+    test_url = "https://rightgifting.com/fashion/him/t-shirt/t-shirtrg104pric0018.html"
+
 from flask import Flask, render_template, request, Response
 from scraper import scrape_product
-import sys
-import io
+import sys, io
 
 app = Flask(__name__)
 app.debug = False
 
-
 @app.route("/")
 def index():
     return render_template("index.html")
-
 
 @app.route("/run", methods=["POST"])
 def run_scraper():
@@ -20,7 +22,6 @@ def run_scraper():
         buffer = io.StringIO()
         old_stdout = sys.stdout
         sys.stdout = buffer
-
         try:
             scrape_product(url)
             yield buffer.getvalue()
@@ -31,6 +32,5 @@ def run_scraper():
 
     return Response(stream(), mimetype="text/plain")
 
-
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000)
+    app.run(debug=True)

@@ -1,5 +1,4 @@
-flask
-beautifulsoup4
+fastapi
+uvicorn
 requests
-cloudscraper
-
+beautifulsoup4
