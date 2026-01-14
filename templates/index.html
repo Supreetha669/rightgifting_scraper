@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>RightGifting Scraper</title>
+</head>
 <body>
-<form method="post" action="/run">
-    <input name="url" placeholder="Product URL" style="width:400px">
-    <button>Scrape</button>
-</form>
-<pre id="output"></pre>
+    <h2>RightGifting Product Scraper</h2>
 
-<script>
-document.querySelector("form").onsubmit = async e => {
-    e.preventDefault();
-    const res = await fetch("/run", {
-        method: "POST",
-        body: new FormData(e.target)
-    });
-    document.getElementById("output").innerText = await res.text();
-};
-</script>
+    <form action="/run" method="post">
+        <input type="text" name="url" placeholder="Enter product URL" style="width:400px" required>
+        <button type="submit">Scrape</button>
+    </form>
+
+    <pre id="output"></pre>
 </body>
 </html>
