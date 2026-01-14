@@ -8,6 +8,8 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
 # Inside scraper.py
 OUTPUT_DIR = "sku"
+# Change this line in scraper.py
+OUTPUT_DIR = "/tmp/sku"
 
 
 # Main folder as requested
