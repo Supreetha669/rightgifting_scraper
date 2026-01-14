@@ -13,7 +13,30 @@ OUTPUT_DIR = "/tmp/sku"
 
 
 # Main folder as requested
+import cloudscraper
 
+
+def scrape_product(url):
+    # Instead of requests.Session(), use cloudscraper
+    # It automatically handles the "Checking your browser" challenge
+    scraper = cloudscraper.create_scraper(
+        browser={
+            'browser': 'chrome',
+            'platform': 'windows',
+            'desktop': True
+        }
+    )
+
+    try:
+        # Use scraper.get instead of requests.get
+        r = scraper.get(url, timeout=30)
+
+        if r.status_code != 200:
+            print(f"ERROR: Status {r.status_code}")
+            # If still 403, we may need a proxy (see below)
+            return
+
+        # ... rest of your BeautifulSoup logic remains the same
 
 def clean(text):
     return " ".join(text.split()).strip() if text else ""
