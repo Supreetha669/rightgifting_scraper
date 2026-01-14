@@ -1,8 +1,10 @@
+# app.py
 from flask import Flask, render_template, request, Response
 from scraper import scrape_product
 import sys, io
 
 app = Flask(__name__)
+app.debug = False
 
 @app.route("/")
 def index():
@@ -20,11 +22,11 @@ def run_scraper():
             scrape_product(url)
             yield buffer.getvalue()
         except Exception as e:
-            yield f"ERROR: {str(e)}"
+            yield str(e)
         finally:
             sys.stdout = old_stdout
 
     return Response(stream(), mimetype="text/plain")
 
-# DO NOT REMOVE (needed for Vercel)
-app.debug = False
+if __name__ == "__main__":
+    app.run(debug=True)

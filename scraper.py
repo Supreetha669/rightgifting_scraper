@@ -6,15 +6,18 @@ from bs4 import BeautifulSoup
 import json
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/120.0.0.0 Safari/537.36",
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    ),
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://rightgifting.com/",
     "Connection": "keep-alive",
-    "Upgrade-Insecure-Requests": "1"
+    "Upgrade-Insecure-Requests": "1",
 }
+
 
 
 OUTPUT_DIR = "/tmp/sku"  # Vercel-safe
@@ -25,7 +28,24 @@ def clean(text):
 def scrape_product(url):
     print(f"\n--- Scraping Product ---\nURL: {url}")
 
-    r = requests.get(url, headers=HEADERS, timeout=30)
+    session = requests.Session()
+    session.headers.update(HEADERS)
+
+    # First request → get cookies
+    session.get("https://rightgifting.com/", timeout=15)
+
+    # Second request → product page
+    r = session.get(url, timeout=30)
+    if r.status_code == 403:
+        print("403 detected, retrying with fresh session...")
+        session = requests.Session()
+        session.headers.update(HEADERS)
+        session.get("https://rightgifting.com/", timeout=15)
+        r = session.get(url, timeout=30)
+    if r.status_code != 200:
+        print(f"ERROR: Status {r.status_code}")
+        return
+
     if r.status_code != 200:
         print(f"ERROR: Status {r.status_code}")
         return
