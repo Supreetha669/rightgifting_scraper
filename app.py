@@ -3,6 +3,8 @@ from scraper import scrape_product
 import sys
 import io
 
+
+
 app = Flask(__name__)
 
 
