@@ -13,9 +13,8 @@ def index():
 def run_scraper():
     url = request.form.get("url")
     if not url:
-        return "Please provide a URL", 400
+        return "URL is required", 400
 
-    # stream_with_context allows Vercel to keep the connection open while scraping
     return Response(stream_with_context(scrape_product(url)), mimetype="text/plain")
 
 
