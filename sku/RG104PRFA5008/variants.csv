@@ -1,11 +1,2 @@
-sku,category,size,fabric,base_price
-RG104PRFA5008,Other,Small,Polyester,₹319.00
-RG104PRFA5008,Other,Small,Cotton,₹319.00
-RG104PRFA5008,Other,Medium,Polyester,₹319.00
-RG104PRFA5008,Other,Medium,Cotton,₹319.00
-RG104PRFA5008,Other,Large,Polyester,₹319.00
-RG104PRFA5008,Other,Large,Cotton,₹319.00
-RG104PRFA5008,Other,Extra Large,Polyester,₹319.00
-RG104PRFA5008,Other,Extra Large,Cotton,₹319.00
-RG104PRFA5008,Other,XXL,Polyester,₹319.00
-RG104PRFA5008,Other,XXL,Cotton,₹319.00
+sku,size,fabric,price
+RG104PRFA5008,N/A,N/A,₹319.00
