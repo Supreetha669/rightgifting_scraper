@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, Response
 from scraper import scrape_product
-import sys, io, os
+import sys, io
 
 app = Flask(__name__, template_folder="../templates")
-app.debug = False
 
 @app.route("/", methods=["GET"])
 def index():
@@ -13,20 +12,20 @@ def index():
 def run_scraper():
     url = request.form.get("url")
 
-    def stream():
+    def generate():
         buffer = io.StringIO()
         old_stdout = sys.stdout
         sys.stdout = buffer
         try:
             scrape_product(url)
-            yield buffer.getvalue()
+            return buffer.getvalue()
         except Exception as e:
-            yield str(e)
+            return str(e)
         finally:
             sys.stdout = old_stdout
 
-    return Response(stream(), mimetype="text/plain")
+    return Response(generate(), mimetype="text/plain")
 
-# Vercel needs this
-def handler(request, context):
-    return app(request, context)
+# 🔥 THIS IS WHAT VERCEL NEEDS
+def app_handler(environ, start_response):
+    return app.wsgi_app(environ, start_response)
