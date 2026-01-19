@@ -16,7 +16,7 @@ for sku in os.listdir(BASE_DIR):
         try:
             upload = cloudinary.uploader.upload(
                 img_path,
-                folder=f"rightgifting/{sku}",
+                folder=f"rightgifting/fashion/her/{sku}",
                 public_id=os.path.splitext(img)[0]
             )
 

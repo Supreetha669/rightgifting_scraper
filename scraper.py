@@ -38,7 +38,7 @@ def extract_category_from_url(url):
             gender = "plus-size"
 
         for p in parts:
-            if p in ["t-shirt", "tshirt", "hoodies", "legging", "apron"]:
+            if p in ["t-shirt", "tshirt", "hoodies", "legging","Couple-Tshirt" "apron"]:
                 product_type = p
                 break
 
