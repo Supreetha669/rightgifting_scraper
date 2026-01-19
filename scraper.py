@@ -3,6 +3,10 @@ import csv
 import requests
 from bs4 import BeautifulSoup
 import json
+from io import BytesIO
+import cloudinary.uploader
+import cloudinary_config
+
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
@@ -12,6 +16,33 @@ OUTPUT_DIR = "sku"
 
 
 # Main folder as requested
+def extract_category_from_url(url):
+    parts = url.lower().split("/")
+
+    gender = "unknown"
+    product_type = "unknown"
+    main_category = "fashion"
+
+    if "personal-products" in parts:
+        main_category = "personal-products"
+        idx = parts.index("personal-products")
+        product_type = parts[idx + 1] if idx + 1 < len(parts) else "unknown"
+    else:
+        if "him" in parts:
+            gender = "him"
+        elif "her" in parts:
+            gender = "her"
+        elif "babies" in parts or "kids" in parts:
+            gender = "babies-kids"
+        elif "plus" in parts:
+            gender = "plus-size"
+
+        for p in parts:
+            if p in ["t-shirt", "tshirt", "hoodies", "legging", "apron"]:
+                product_type = p
+                break
+
+    return main_category, gender, product_type
 
 
 def clean(text):
@@ -28,6 +59,7 @@ def scrape_product(url):
             return
 
         soup = BeautifulSoup(r.text, "html.parser")
+        main_category, gender, product_type = extract_category_from_url(url)
 
         # 1. Extract SKU & Name (Using safer selectors)
         sku_tag = soup.select_one('div[itemprop="sku"]') or soup.select_one('.product.attribute.sku .value')
@@ -43,7 +75,14 @@ def scrape_product(url):
         description = clean(desc_tag.text) if desc_tag else ""
 
         # ---------- Folders: sku / [SKU_ID] / images ----------
-        sku_dir = os.path.join(OUTPUT_DIR, sku)
+        sku_dir = os.path.join(
+            OUTPUT_DIR,
+            main_category,
+            gender,
+            product_type,
+            sku
+        )
+
         img_dir = os.path.join(sku_dir, "images")
         os.makedirs(img_dir, exist_ok=True)
 
@@ -87,6 +126,8 @@ def scrape_product(url):
                     print(f"   ✓ Saved {filename}")
             except:
                 continue
+
+
 
         # ---------- Save CSVs ----------
         # 1. productdetails.csv
