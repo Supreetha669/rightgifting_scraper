@@ -47,6 +47,18 @@ def extract_category_from_url(url):
             "legging",
             "couple-tshirt",
             "apron"
+            # Babies & Kids (your list)
+            "bib",
+            "baby-blanket",
+            "stroller-blanket",
+            "romper",
+            "fabric-book",
+            "height-chart",
+            "drawstring-bag",
+            "pencil-pouch",
+            "pillow-cum-book",
+            "bookmark",
+            "meal-mat",
         ]
 
         for p in parts:
