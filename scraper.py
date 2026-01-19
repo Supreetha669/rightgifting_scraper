@@ -56,6 +56,7 @@ def extract_category_from_url(url):
             "height-chart",
             "drawstring-bag",
             "pencil-pouch",
+            "pillow - book"
             "pillow-cum-book",
             "bookmark",
             "meal-mat",
