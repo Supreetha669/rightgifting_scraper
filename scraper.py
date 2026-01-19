@@ -23,10 +23,13 @@ def extract_category_from_url(url):
     product_type = "unknown"
     main_category = "fashion"
 
+    # ---------- PERSONAL PRODUCTS ----------
     if "personal-products" in parts:
         main_category = "personal-products"
         idx = parts.index("personal-products")
         product_type = parts[idx + 1] if idx + 1 < len(parts) else "unknown"
+
+    # ---------- FASHION ----------
     else:
         if "him" in parts:
             gender = "him"
@@ -34,11 +37,20 @@ def extract_category_from_url(url):
             gender = "her"
         elif "babies" in parts or "kids" in parts:
             gender = "babies-kids"
-        elif "plus" in parts:
+        elif "plus-size" in parts:              # ✅ FIXED
             gender = "plus-size"
 
+        PRODUCT_TYPES = [
+            "t-shirt",
+            "tshirt",
+            "hoodies",
+            "legging",
+            "couple-tshirt",
+            "apron"
+        ]
+
         for p in parts:
-            if p in ["t-shirt", "tshirt", "hoodies", "legging","Couple-Tshirt" "apron"]:
+            if p in PRODUCT_TYPES:
                 product_type = p
                 break
 
