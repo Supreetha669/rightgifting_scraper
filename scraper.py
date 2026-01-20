@@ -59,7 +59,9 @@ def extract_category_from_url(url):
             "pillow - book"
             "pillow-cum-book",
             "bookmark",
+            "book - mark",
             "meal-mat",
+            "apron - full",
         ]
 
         for p in parts:
