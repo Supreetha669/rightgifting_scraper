@@ -23,11 +23,34 @@ def extract_category_from_url(url):
     product_type = "unknown"
     main_category = "fashion"
 
-    # ---------- PERSONAL PRODUCTS ----------
+        # ---------- PERSONAL PRODUCTS ----------
     if "personal-products" in parts:
         main_category = "personal-products"
-        idx = parts.index("personal-products")
-        product_type = parts[idx + 1] if idx + 1 < len(parts) else "unknown"
+
+        PERSONAL_PRODUCT_TYPES = [
+            "apron",
+            "arm-sleeve",
+            "cape",
+            "chef-cap",
+            "cosmetic-pouch",
+            "eye-mask",
+            "fabric-crown",
+            "face-mask",
+            "keychain",
+            "laptop-sleeve",
+            "mouse-pad",
+            "mug",
+            "customised-photo-blanket",
+            "umbrella",
+            "water-bottle",
+            "scroll",
+            "makeup-pouch"
+        ]
+
+        for p in parts:
+            if p in PERSONAL_PRODUCT_TYPES:
+                product_type = p
+                break
 
     # ---------- FASHION ----------
     else:

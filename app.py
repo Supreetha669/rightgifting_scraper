@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, Response
 from scraper import scrape_product
 import sys, io
 
+
 app = Flask(__name__)
 app.debug = False
 
