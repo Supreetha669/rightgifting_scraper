@@ -38,6 +38,7 @@ def extract_category_from_url(url):
             "face-mask",
             "keychain",
             "laptop-sleeve",
+            "laptop - sleeve - 1749673510"
             "mouse-pad",
             "mug",
             "customised-photo-blanket",
